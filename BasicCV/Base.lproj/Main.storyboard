@@ -1,24 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="OgW-FB-luW">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
-        <scene sceneID="tne-QT-ifu">
+        <!--Vision View Controller-->
+        <scene sceneID="b9R-Ap-qSw">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                <viewController id="OgW-FB-luW" customClass="VisionViewController" customModule="BasicCV" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="c8J-oJ-QTi">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R3h-mR-ftA" customClass="PreviewView" customModule="Inquisly" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" systemColor="systemBlueColor"/>
+                            </view>
+                            <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5C8-va-TR0" userLabel="Cutout View">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <gestureRecognizers/>
+                            </view>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FKB-io-BR2">
+                                <rect key="frame" x="116.5" y="430.5" width="181" height="35"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="0001112222">
+                                        <attributes>
+                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <font key="NSFont" size="30" name="Menlo-Regular"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="truncatingTail" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="mqd-K1-jbs"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="5C8-va-TR0" secondAttribute="bottom" id="1W4-OK-sa1"/>
+                            <constraint firstAttribute="bottom" secondItem="R3h-mR-ftA" secondAttribute="bottom" id="2Vh-HI-qqs"/>
+                            <constraint firstItem="R3h-mR-ftA" firstAttribute="centerX" secondItem="c8J-oJ-QTi" secondAttribute="centerX" id="8Nl-J3-uSZ"/>
+                            <constraint firstItem="5C8-va-TR0" firstAttribute="centerY" secondItem="c8J-oJ-QTi" secondAttribute="centerY" id="Bz9-1q-7tX"/>
+                            <constraint firstItem="R3h-mR-ftA" firstAttribute="centerY" secondItem="c8J-oJ-QTi" secondAttribute="centerY" id="JlU-zQ-KNw"/>
+                            <constraint firstAttribute="trailing" secondItem="5C8-va-TR0" secondAttribute="trailing" id="Pk2-bm-n52"/>
+                            <constraint firstAttribute="trailing" secondItem="R3h-mR-ftA" secondAttribute="trailing" id="Ts2-Zd-v1N"/>
+                            <constraint firstItem="5C8-va-TR0" firstAttribute="centerX" secondItem="c8J-oJ-QTi" secondAttribute="centerX" id="Vep-aI-2Rj"/>
+                            <constraint firstItem="FKB-io-BR2" firstAttribute="centerY" secondItem="c8J-oJ-QTi" secondAttribute="centerY" placeholder="YES" id="We0-G7-UWn"/>
+                            <constraint firstItem="FKB-io-BR2" firstAttribute="centerX" secondItem="c8J-oJ-QTi" secondAttribute="centerX" placeholder="YES" id="nWL-l4-Fpp"/>
+                        </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="MpE-7v-kpy"/>
+                    <connections>
+                        <outlet property="cutoutView" destination="5C8-va-TR0" id="TQZ-lX-p3f"/>
+                        <outlet property="numberView" destination="FKB-io-BR2" id="vcE-2B-3cd"/>
+                        <outlet property="previewView" destination="R3h-mR-ftA" id="DII-jc-meJ"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IhS-If-ZQa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-9764" y="-182"/>
         </scene>
     </scenes>
+    <resources>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
 </document>
