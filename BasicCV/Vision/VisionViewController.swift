@@ -8,7 +8,7 @@ import Vision
 class VisionViewController: ViewController {
 	var request: VNRecognizeTextRequest!
 	// Temporal string tracker
-	let numberTracker = StringTracker()
+	let stringTracker = StringTracker()
 	
 	override func viewDidLoad() {
 		// Set up vision request before letting ViewController set up the camera
@@ -22,7 +22,7 @@ class VisionViewController: ViewController {
 	
 	// Vision recognition handler.
 	func recognizeTextHandler(request: VNRequest, error: Error?) {
-		var numbers = [String]()
+		var rawStrings = [String]()
 		var redBoxes = [CGRect]() // Shows all recognized text lines
 		var greenBoxes = [CGRect]() // Shows words that might be serials
 		
@@ -42,12 +42,37 @@ class VisionViewController: ViewController {
 			// the full result only draw the green box.
 			var numberIsSubstring = true
             print(candidate.string)
-			if let result = candidate.string.extractPhoneNumber() {
+            
+            let json: [String: Any] = ["rawText": candidate.string]
+
+            let jsonData = try? JSONSerialization.data(withJSONObject: json)
+
+            // create post request
+            let url = URL(string: "http://192.168.1.175:5000/api/rawtext")!
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+
+            // insert json data to the request
+            request.httpBody = jsonData
+
+            let task = URLSession.shared.dataTask(with: request) { data, response, error in
+                guard let data = data, error == nil else {
+                    print(error?.localizedDescription ?? "No data")
+                    return
+                }
+                let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
+                if let responseJSON = responseJSON as? [String: Any] {
+                    print(responseJSON)
+                }
+            }
+
+            task.resume()
+			if let result = candidate.string.extractCleanString() {
 				let (range, number) = result
 				// Number may not cover full visionResult. Extract bounding box
 				// of substring.
 				if let box = try? candidate.boundingBox(for: range)?.boundingBox {
-					numbers.append(number)
+					rawStrings.append(number)
                     greenBoxes.append(box)
 					numberIsSubstring = !(range.lowerBound == candidate.string.startIndex && range.upperBound == candidate.string.endIndex)
 				}
@@ -58,13 +83,13 @@ class VisionViewController: ViewController {
 		}
 		
 		// Log any found numbers.
-		numberTracker.logFrame(strings: numbers)
+		stringTracker.logFrame(strings: rawStrings)
 		show(boxGroups: [(color: UIColor.green.cgColor, boxes: redBoxes), (color: UIColor.green.cgColor, boxes: greenBoxes)])
 		
 		// Check if we have any temporally stable numbers.
-		if let sureNumber = numberTracker.getStableString() {
+		if let sureString = stringTracker.getStableString() {
 			//showString(string: sureNumber)
-			numberTracker.reset(string: sureNumber)
+			stringTracker.reset(string: sureString)
 		}
 	}
 	

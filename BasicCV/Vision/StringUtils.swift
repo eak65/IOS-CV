@@ -13,18 +13,7 @@ extension Character {
 	// oO, wW, cC, sS, pP and others only differ by size in many fonts
 	func getSimilarCharacterIfNotIn(allowedChars: String) -> Character {
 		let conversionTable = [
-			"s": "S",
-			"S": "5",
-			"5": "S",
-			"o": "O",
-			"Q": "O",
-			"O": "0",
-			"0": "O",
-			"l": "I",
-			"I": "1",
-			"1": "I",
-			"B": "8",
-			"8": "B"
+			"": ""
 		]
 		// Allow a maximum of two substitutions to handle 's' -> 'S' -> '5'.
 		let maxSubstitutions = 2
@@ -48,7 +37,7 @@ extension String {
 	// Extracts the first US-style phone number found in the string, returning
 	// the range of the number and the number itself as a tuple.
 	// Returns nil if no number is found.
-	func extractPhoneNumber() -> (Range<String.Index>, String)? {
+	func extractCleanString() -> (Range<String.Index>, String)? {
 		// Do a first pass to find any substring that could be a US phone
 		// number. This will match the following common patterns and more:
 		// xxx-xxx-xxxx
@@ -98,9 +87,9 @@ extension String {
 		}
 		
 		// Must be exactly 10 digits.
-		guard phoneNumberDigits.count == 10 else {
-			return nil
-		}
+//		guard phoneNumberDigits.count == 10 else {
+//			return nil
+//		}
 		
 		// Substitute commonly misrecognized characters, for example: 'S' -> '5' or 'l' -> '1'
 		var result = ""
@@ -127,6 +116,7 @@ class StringTracker {
 	var bestCount = Int64(0)
 	var bestString = ""
 
+    // logs strings seen and removed any a second old
 	func logFrame(strings: [String]) {
 		for string in strings {
 			if seenStrings[string] == nil {
