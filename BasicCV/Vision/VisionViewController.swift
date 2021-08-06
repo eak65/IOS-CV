@@ -5,10 +5,28 @@ import UIKit
 import AVFoundation
 import Vision
 
+
+struct Message: Comparable, Equatable {
+  let text: String
+  let priority: Int
+    
+    static func < (lhs: Message, rhs: Message) -> Bool {
+        return lhs.priority < rhs.priority
+    }
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs.text == rhs.text
+    }
+
+    
+}
+
+
 class VisionViewController: ViewController {
 	var request: VNRecognizeTextRequest!
 	// Temporal string tracker
 	let stringTracker = StringTracker()
+    
+    var queue = PriorityQueue<Message>(sort: >)
 	
 	override func viewDidLoad() {
 		// Set up vision request before letting ViewController set up the camera
@@ -41,32 +59,19 @@ class VisionViewController: ViewController {
 			// number and a red box around the full string. If the number covers
 			// the full result only draw the green box.
 			var numberIsSubstring = true
-            print(candidate.string)
+            //print(candidate.string.removeNonAscii())
             
-            let json: [String: Any] = ["rawText": candidate.string]
-
-            let jsonData = try? JSONSerialization.data(withJSONObject: json)
-
-            // create post request
-            let url = URL(string: "http://192.168.1.175:5000/api/rawtext")!
-            var request = URLRequest(url: url)
-            request.httpMethod = "POST"
-
-            // insert json data to the request
-            request.httpBody = jsonData
-
-            let task = URLSession.shared.dataTask(with: request) { data, response, error in
-                guard let data = data, error == nil else {
-                    print(error?.localizedDescription ?? "No data")
-                    return
-                }
-                let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
-                if let responseJSON = responseJSON as? [String: Any] {
-                    print(responseJSON)
+            if candidate.string.contains("?") {
+                let message = Message(text: candidate.string, priority: 1)
+                if let index = queue.index(of: message) {
+                    
+                    queue.changePriority(index: index, value: Message(text: candidate.string,priority:queue.get(index: index).priority + 1))
+                } else {
+                    queue.enqueue(message)
                 }
             }
-
-            task.resume()
+            //post(rawText: candidate.string.removeNonAscii()
+           
 			if let result = candidate.string.extractCleanString() {
 				let (range, number) = result
 				// Number may not cover full visionResult. Extract bounding box
@@ -92,6 +97,32 @@ class VisionViewController: ViewController {
 			stringTracker.reset(string: sureString)
 		}
 	}
+    func post(rawText : String) {
+        let json: [String: Any] = ["rawText": rawText]
+
+        let jsonData = try? JSONSerialization.data(withJSONObject: json)
+
+        // create post request
+        let url = URL(string: "http://192.168.1.175:5000/api/rawtext")!
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+
+        // insert json data to the request
+        request.httpBody = jsonData
+
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {
+                print(error?.localizedDescription ?? "No data")
+                return
+            }
+            let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
+            if let responseJSON = responseJSON as? [String: Any] {
+                print(responseJSON)
+            }
+        }
+
+        task.resume()
+    }
 	
 	override func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
 		if let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) {

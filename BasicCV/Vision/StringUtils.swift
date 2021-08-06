@@ -34,6 +34,16 @@ extension Character {
 }
 
 extension String {
+    
+    func removeNonAscii() -> String{
+        var newString = ""
+        self.forEach { c in
+            if c.isASCII {
+                newString.append(c)
+            }
+        }
+        return newString
+    }
 	// Extracts the first US-style phone number found in the string, returning
 	// the range of the number and the number itself as a tuple.
 	// Returns nil if no number is found.

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		299FEED326BCACC600D79E19 /* Heap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299FEED226BCACC600D79E19 /* Heap.swift */; };
+		299FEED526BCACE800D79E19 /* PriorityQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299FEED426BCACE800D79E19 /* PriorityQueue.swift */; };
 		29A062BE26B86811005D88E1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A062BD26B86811005D88E1 /* AppDelegate.swift */; };
 		29A062C026B86811005D88E1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A062BF26B86811005D88E1 /* SceneDelegate.swift */; };
 		29A062C226B86811005D88E1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29A062C126B86811005D88E1 /* ViewController.swift */; };
@@ -19,6 +21,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		299FEED226BCACC600D79E19 /* Heap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Heap.swift; sourceTree = "<group>"; };
+		299FEED426BCACE800D79E19 /* PriorityQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriorityQueue.swift; sourceTree = "<group>"; };
 		29A062BA26B86811005D88E1 /* BasicCV.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BasicCV.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		29A062BD26B86811005D88E1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		29A062BF26B86811005D88E1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -70,6 +74,8 @@
 				29A062C626B86812005D88E1 /* Assets.xcassets */,
 				29A062C826B86812005D88E1 /* LaunchScreen.storyboard */,
 				29A062CB26B86812005D88E1 /* Info.plist */,
+				299FEED226BCACC600D79E19 /* Heap.swift */,
+				299FEED426BCACE800D79E19 /* PriorityQueue.swift */,
 			);
 			path = BasicCV;
 			sourceTree = "<group>";
@@ -159,7 +165,9 @@
 				29A062D226B86845005D88E1 /* VisionViewController.swift in Sources */,
 				29A062C226B86811005D88E1 /* ViewController.swift in Sources */,
 				29A062BE26B86811005D88E1 /* AppDelegate.swift in Sources */,
+				299FEED526BCACE800D79E19 /* PriorityQueue.swift in Sources */,
 				29A062C026B86811005D88E1 /* SceneDelegate.swift in Sources */,
+				299FEED326BCACC600D79E19 /* Heap.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
