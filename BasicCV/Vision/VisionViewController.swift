@@ -46,11 +46,12 @@ class VisionViewController: ViewController {
     
     @objc func updateCounting(){
 
-        DispatchQueue.global(qos: .background).async {
+        DispatchQueue.global(qos: .background).async { [self] in
             print("This is run on the background queue")
             if let text = self.queue.dequeue()?.text {
                 print("Posting: \(text)")
-                //post(rawText: text)
+                self.queue = PriorityQueue<Message>(sort: >)
+                post(rawText: text)
             }
             DispatchQueue.main.async {
                 print("This is run on the main queue, after the previous code in outer block")
