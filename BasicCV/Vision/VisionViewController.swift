@@ -27,14 +27,36 @@ class VisionViewController: ViewController {
 	let stringTracker = StringTracker()
     
     var queue = PriorityQueue<Message>(sort: >)
-	
+    var timer = Timer()
+
 	override func viewDidLoad() {
 		// Set up vision request before letting ViewController set up the camera
 		// so that it exists when the first buffer is received.
 		request = VNRecognizeTextRequest(completionHandler: recognizeTextHandler)
 
 		super.viewDidLoad()
+        
+        scheduledTimerWithTimeInterval()
+
 	}
+    
+    func scheduledTimerWithTimeInterval(){
+        timer = Timer.scheduledTimer(timeInterval: 20, target: self, selector: #selector(self.updateCounting), userInfo: nil, repeats: true)
+    }
+    
+    @objc func updateCounting(){
+
+        DispatchQueue.global(qos: .background).async {
+            print("This is run on the background queue")
+            if let text = self.queue.dequeue()?.text {
+                print("Posting: \(text)")
+                //post(rawText: text)
+            }
+            DispatchQueue.main.async {
+                print("This is run on the main queue, after the previous code in outer block")
+            }
+        }
+    }
 	
 	// MARK: - Text recognition
 	
